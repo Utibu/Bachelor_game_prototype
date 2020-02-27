@@ -73,7 +73,7 @@ public class TaskManager : MonoBehaviour
     public void StartTaskOne()
     {
         waterImage.sprite = emptyWaterSprite;
-        waterTextContainer.SetActive(true);
+        //waterTextContainer.SetActive(true);
         method = TaskOneFinished;
         source.loop = true;
         source.clip = waterClip;
@@ -95,11 +95,16 @@ public class TaskManager : MonoBehaviour
         method = TaskThreeFinished;
     }
 
+    public void StartTaskFour()
+    {
+        method = TaskFourFinished;
+    }
+
     private void TaskOneUpdate()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GameManager.Instance.FinishTask();
+            //GameManager.Instance.FinishTask();
         }
     }
 
@@ -137,6 +142,11 @@ public class TaskManager : MonoBehaviour
         foodTextContainer.SetActive(false);
     }
 
+    private void TaskFourFinished()
+    {
+
+    }
+
     public void FinishTask()
     {
         taskIsOn = false;
@@ -168,6 +178,9 @@ public class TaskManager : MonoBehaviour
                 break;
             case 3:
                 StartTaskThree();
+                break;
+            case 4:
+                StartTaskFour();
                 break;
             default:
                 break;
