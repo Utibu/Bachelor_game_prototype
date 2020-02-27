@@ -9,6 +9,7 @@ public class PlayerValues : MonoBehaviour
     private int foundObjects = 0;
     public TMP_Text collectablesText;
     public GameObject TriggerHelper;
+    public TMP_Text TriggerHelperText;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class PlayerValues : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.taskManager.taskIsOn)
+        /*if(GameManager.Instance.taskManager.taskIsOn)
         {
             if (GameManager.Instance.taskManager.GetCurrentTask() == 1)
             {
@@ -28,16 +29,20 @@ public class PlayerValues : MonoBehaviour
                     GameManager.Instance.FinishTask();
                 }
             }
-        }
+        }*/
 
     }
 
-    public void RegisterFoundObject(GameObject g)
+    public void RegisterFoundObject(GameObject g, bool isTaskTrigger = true)
     {
-        foundObjects++;
         g.SetActive(false);
-        UpdateCollectablesUI();
-        TriggerNextTask();
+        if(isTaskTrigger)
+        {
+            foundObjects++;
+            UpdateCollectablesUI();
+            TriggerNextTask();
+        }
+
     }
 
     public void UpdateCollectablesUI()
@@ -47,6 +52,6 @@ public class PlayerValues : MonoBehaviour
 
     public void TriggerNextTask()
     {
-        GameManager.Instance.taskManager.StartTask();
+        GameManager.Instance.TriggerTask();
     }
 }

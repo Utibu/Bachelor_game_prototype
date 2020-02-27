@@ -11,6 +11,7 @@ public class TaskManager : MonoBehaviour
     public TMP_Text counterText;
     public float time;
     public bool taskIsOn = false;
+    public bool specialTaskIsOn = false;
     public List<float> taskTimes;
     private int currentTask = 0;
 
@@ -19,11 +20,22 @@ public class TaskManager : MonoBehaviour
     private delegate void MyDelegate();
     private MyDelegate method;
 
+    [Header("Task One - Water")]
     public Sprite filledWaterSprite;
     public Sprite emptyWaterSprite;
     public GameObject waterTextContainer;
     public Image waterImage;
     public AudioClip waterClip;
+
+    [Header("Task Two - Food")]
+    public Sprite halfFilledFoodSprite;
+    public Sprite emptyFoodSprite;
+    public GameObject foodTextContainer;
+    public Image foodImage;
+    public AudioClip foodClip;
+
+    [Header("Task Three - Food 2 (Pig)")]
+    public Sprite fullFoodSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +46,7 @@ public class TaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("TASKTIME: " + time);
         if(taskIsOn)
         {
             time += Time.deltaTime;
@@ -42,6 +55,9 @@ public class TaskManager : MonoBehaviour
             {
                 case 1:
                     TaskOneUpdate();
+                    break;
+                case 2:
+                    TaskTwoUpdate();
                     break;
                 default:
                     break;
@@ -64,9 +80,43 @@ public class TaskManager : MonoBehaviour
         source.Play();
     }
 
+    public void StartTaskTwo()
+    {
+        foodImage.sprite = emptyFoodSprite;
+        foodTextContainer.SetActive(true);
+        method = TaskTwoFinished;
+        source.loop = true;
+        source.clip = foodClip;
+        source.Play();
+    }
+
+    public void StartTaskThree()
+    {
+        method = TaskThreeFinished;
+    }
+
     private void TaskOneUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            GameManager.Instance.FinishTask();
+        }
+    }
 
+    private void TaskTwoUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameManager.Instance.FinishTask();
+        }
+    }
+
+    private void TaskThreeUpdate()
+    {
+        /*if (Input.GetKeyDown(KeyCode.I))
+        {
+            GameManager.Instance.FinishTask();
+        }*/
     }
 
     private void TaskOneFinished()
@@ -75,25 +125,49 @@ public class TaskManager : MonoBehaviour
         waterTextContainer.SetActive(false);
     }
 
+    private void TaskTwoFinished()
+    {
+        foodImage.sprite = halfFilledFoodSprite;
+        foodTextContainer.SetActive(false);
+    }
+
+    private void TaskThreeFinished()
+    {
+        foodImage.sprite = fullFoodSprite;
+        foodTextContainer.SetActive(false);
+    }
+
     public void FinishTask()
     {
         taskIsOn = false;
         taskTimes.Add(time);
         source.Stop();
         source.loop = false;
+        specialTaskIsOn = false;
         method();
     }
 
-    public void StartTask()
+    public void StartTask(bool specialTask = false)
     {
         currentTask++;
         taskIsOn = true;
         time = 0f;
 
+        if(specialTask)
+        {
+            specialTaskIsOn = true;
+        }
+
         switch (currentTask)
         {
             case 1:
                 StartTaskOne();
+                break;
+            case 2:
+                StartTaskTwo();
+                break;
+            case 3:
+                StartTaskThree();
                 break;
             default:
                 break;

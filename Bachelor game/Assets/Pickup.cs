@@ -6,6 +6,7 @@ public class Pickup : MonoBehaviour
 {
 
     private bool inArea = false;
+    public string TriggerHelperText;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +22,17 @@ public class Pickup : MonoBehaviour
             if(Input.GetMouseButtonDown(0))
             {
                 Player.Instance.playerValues.TriggerHelper.SetActive(false);
-                Player.Instance.playerValues.RegisterFoundObject(this.gameObject);
+
+
+                if(GameManager.Instance.taskManager.specialTaskIsOn)
+                {
+                    Player.Instance.playerValues.RegisterFoundObject(this.gameObject, false);
+                    GameManager.Instance.FinishTask();
+                }
+                else
+                {
+                    Player.Instance.playerValues.RegisterFoundObject(this.gameObject);
+                }
             }
         }
     }
@@ -30,6 +41,7 @@ public class Pickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Player.Instance.playerValues.TriggerHelperText.text = TriggerHelperText;
             Player.Instance.playerValues.TriggerHelper.SetActive(true);
         }
     }

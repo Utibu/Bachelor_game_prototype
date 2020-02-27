@@ -43,9 +43,29 @@ public class GameManager : MonoBehaviour
 
     public void TriggerTask()
     {
+        switch(taskManager.GetCurrentTask())
+        {
+            case 0:
+                Invoke("TriggerTaskHandler", 1f);
+                break;
+            case 1:
+                Invoke("TriggerTaskHandler", 1f);
+                break;
+            default:
+                TriggerTaskHandler();
+                break;
+        }
+
+    }
+
+    public void TriggerTaskHandler(bool specialTask)
+    {
+        taskManager.StartTask(specialTask);
+    }
+
+    public void TriggerTaskHandler()
+    {
         taskManager.StartTask();
-
-
     }
 
     public void FinishTask()
@@ -56,6 +76,10 @@ public class GameManager : MonoBehaviour
             GameObject newGameObject = pickupQueue.Dequeue();
             Debug.Log(newGameObject.name);
             newGameObject.SetActive(true);
+            if (newGameObject.CompareTag("Instant"))
+            {
+                TriggerTaskHandler(true);
+            }
 
         }
         else
