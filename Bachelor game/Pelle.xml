@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<BachelorTimeData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TimeData>
+    <DataEntry>
+      <title>Task 1</title>
+      <time>12</time>
+    </DataEntry>
+    <DataEntry>
+      <title>Task 2</title>
+      <time>12</time>
+    </DataEntry>
+  </TimeData>
+  <version>0</version>
+  <identifier>Pelle</identifier>
+</BachelorTimeData>

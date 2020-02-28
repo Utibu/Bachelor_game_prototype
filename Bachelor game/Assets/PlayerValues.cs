@@ -10,6 +10,7 @@ public class PlayerValues : MonoBehaviour
     public TMP_Text collectablesText;
     public GameObject TriggerHelper;
     public TMP_Text TriggerHelperText;
+    public TMP_Text goalText;
 
     // Start is called before the first frame update
     void Start()

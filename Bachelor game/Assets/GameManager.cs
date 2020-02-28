@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +10,10 @@ public class GameManager : MonoBehaviour
     public TaskManager taskManager;
     public List<GameObject> pickups;
     private Queue<GameObject> pickupQueue;
+    public Canvas finishCanvas;
+    public FilePrinter filePrinter;
+    public int Version = 0;
+    public TMP_InputField IdentifierInput;
 
     public void Awake()
     {
@@ -25,6 +31,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //ShowFinish();
         pickupQueue = new Queue<GameObject>();
         Debug.Log(pickups.Count);
         for(int i = 0; i <= pickups.Count - 1; i++)
@@ -51,6 +58,9 @@ public class GameManager : MonoBehaviour
             case 1:
                 Invoke("TriggerTaskHandler", 1f);
                 break;
+            case 3:
+                Invoke("TriggerTaskHandler", 10f);
+                break;
             default:
                 TriggerTaskHandler();
                 break;
@@ -66,6 +76,12 @@ public class GameManager : MonoBehaviour
     public void TriggerTaskHandler()
     {
         taskManager.StartTask();
+    }
+
+    public void CancelTriggers()
+    {
+        Debug.Log("CANCEL INVOKE!");
+        CancelInvoke("TriggerTaskHandler");
     }
 
     public void FinishTask()
@@ -85,6 +101,22 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("GAME FINISHED!");
+            ShowFinish();
         }
+    }
+
+    public void ShowFinish()
+    {
+        Debug.Log("SHOWFINISH");
+        finishCanvas.gameObject.SetActive(true);
+        Player.Instance.GetComponent<FirstPersonAIO>().enableCameraMovement = false;
+        Player.Instance.GetComponent<FirstPersonAIO>().playerCanMove = false;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void Save()
+    {
+        filePrinter.SaveFile(IdentifierInput.text);
     }
 }

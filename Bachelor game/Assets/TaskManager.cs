@@ -37,6 +37,13 @@ public class TaskManager : MonoBehaviour
     [Header("Task Three - Food 2 (Pig)")]
     public Sprite fullFoodSprite;
 
+    [Header("Task Four - Notification")]
+    public AudioClip notificationClip;
+
+    [Header("Task Five - Drowning")]
+    public AudioClip drowningClip;
+    public GameObject UnderwaterUI;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +53,7 @@ public class TaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("TASKTIME: " + time);
+        //Debug.Log("TASKTIME: " + time);
         if(taskIsOn)
         {
             time += Time.deltaTime;
@@ -98,6 +105,19 @@ public class TaskManager : MonoBehaviour
     public void StartTaskFour()
     {
         method = TaskFourFinished;
+        Player.Instance.playerValues.goalText.text = "Explore the ocean.";
+        source.loop = false;
+        source.clip = notificationClip;
+        source.Play();
+    }
+
+    public void StartTaskFive()
+    {
+        method = TaskFiveFinished;
+        UnderwaterUI.SetActive(true);
+        source.loop = true;
+        source.clip = drowningClip;
+        source.Play();
     }
 
     private void TaskOneUpdate()
@@ -140,11 +160,17 @@ public class TaskManager : MonoBehaviour
     {
         foodImage.sprite = fullFoodSprite;
         foodTextContainer.SetActive(false);
+        GameManager.Instance.TriggerTask();
     }
 
     private void TaskFourFinished()
     {
 
+    }
+
+    private void TaskFiveFinished()
+    {
+        UnderwaterUI.SetActive(false);
     }
 
     public void FinishTask()
@@ -181,6 +207,9 @@ public class TaskManager : MonoBehaviour
                 break;
             case 4:
                 StartTaskFour();
+                break;
+            case 5:
+                StartTaskFive();
                 break;
             default:
                 break;
