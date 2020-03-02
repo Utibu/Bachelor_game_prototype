@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //ShowFinish();
+        int v = PlayerPrefs.GetInt("CurrentVersion");
+        Version = v;
+
         pickupQueue = new Queue<GameObject>();
         Debug.Log(pickups.Count);
         for(int i = 0; i <= pickups.Count - 1; i++)
@@ -46,6 +49,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     public void TriggerTask()

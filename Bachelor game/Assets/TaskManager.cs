@@ -57,7 +57,7 @@ public class TaskManager : MonoBehaviour
         if(taskIsOn)
         {
             time += Time.deltaTime;
-            counterText.text = $"{time}";
+            //counterText.text = $"{time}";
             switch(currentTask)
             {
                 case 1:

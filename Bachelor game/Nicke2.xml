@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<BachelorTimeData xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <TimeData>
+    <DataEntry>
+      <title>Task 1</title>
+      <time>5.539425</time>
+    </DataEntry>
+    <DataEntry>
+      <title>Task 2</title>
+      <time>0.9084546</time>
+    </DataEntry>
+    <DataEntry>
+      <title>Task 3</title>
+      <time>3.684775</time>
+    </DataEntry>
+    <DataEntry>
+      <title>Task 4</title>
+      <time>0.8636931</time>
+    </DataEntry>
+    <DataEntry>
+      <title>Task 5</title>
+      <time>6.52302027</time>
+    </DataEntry>
+  </TimeData>
+  <version>1</version>
+  <identifier>Nicke2</identifier>
+</BachelorTimeData>
